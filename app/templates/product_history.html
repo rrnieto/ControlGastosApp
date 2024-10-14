@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Historial de Precios</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="welcome-container">
+        <h1>Historial de Precios de {{ product.name }}</h1>
+
+        {% if price_history %}
+            <table class="ticket-table">
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Precio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for record in price_history %}
+                        <tr>
+                            <td>{{ record.date.strftime('%Y-%m-%d') }}</td>
+                            <td>€{{ record.price | round(2) }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No hay historial de precios disponible para este producto.</p>
+        {% endif %}
+        
+        <a href="{{ url_for('main.ticket_detail', ticket_id=product.ticket_id) }}" class="add-expense-link">Volver al Detalle del Ticket</a>
+    </div>
+</body>
+</html>

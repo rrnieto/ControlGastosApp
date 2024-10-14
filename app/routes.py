@@ -44,13 +44,20 @@ def add_expense():
                 product_price = product['price']
                 product_quantity = product['quantity']
 
-                # Crear el producto y registrar el precio en ProductPrice
-                new_product = Product(name=product_name, quantity=product_quantity, ticket_id=ticket.id)
-                db.session.add(new_product)
-                db.session.commit()
+                # Comprobar si el producto ya existe en la base de datos
+                existing_product = Product.query.filter_by(name=product_name).first()
+                if existing_product:
+                    # Si el producto ya existe, solo añadimos el precio con la fecha del ticket
+                    new_price_entry = ProductPrice(date=date, price=product_price, product_id=existing_product.id)
+                    db.session.add(new_price_entry)
+                else:
+                    # Si el producto no existe, lo creamos y añadimos el precio
+                    new_product = Product(name=product_name, quantity=product_quantity, ticket_id=ticket.id)
+                    db.session.add(new_product)
+                    db.session.commit()
 
-                product_price_entry = ProductPrice(date=date, price=product_price, product_id=new_product.id)
-                db.session.add(product_price_entry)
+                    new_price_entry = ProductPrice(date=date, price=product_price, product_id=new_product.id)
+                    db.session.add(new_price_entry)
 
         db.session.commit()
         return redirect(url_for('main.index'))
@@ -58,6 +65,7 @@ def add_expense():
     payment_types = PaymentType.query.all()
     descriptions = Description.query.all()
     return render_template('add_expense.html', payment_types=payment_types, descriptions=descriptions)
+
 
 @bp.route('/')
 def index():
@@ -82,3 +90,10 @@ def ticket_detail(ticket_id):
 
     return render_template('ticket_detail.html', ticket=ticket, products=products)
 
+@bp.route('/product_history/<int:product_id>')
+def product_history(product_id):
+    # Consulta el producto y sus históricos de precios
+    product = Product.query.get_or_404(product_id)
+    price_history = ProductPrice.query.filter_by(product_id=product_id).order_by(ProductPrice.date.desc()).all()
+
+    return render_template('product_history.html', product=product, price_history=price_history)

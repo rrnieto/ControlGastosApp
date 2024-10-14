@@ -27,7 +27,7 @@
                 <tbody>
                     {% for product in products %}
                         <tr>
-                            <td><strong>{{ product.name }}</strong></td>
+                            <td><a href="{{ url_for('main.product_history', product_id=product.id) }}"><strong>{{ product.name }}</strong></a></td>
                             <td>{{ product.quantity }}</td>
                             <td>{{ product.prices[0].price }} €</td>
                             <td><strong>{{ (product.prices[0].price * product.quantity) | round(2) }} €</strong></td>
