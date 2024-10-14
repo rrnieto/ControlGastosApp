@@ -73,3 +73,12 @@ def view_tickets():
     tickets = Ticket.query.order_by(Ticket.date.desc()).limit(ticket_count).all()
 
     return render_template('view_tickets.html', tickets=tickets)
+    
+@bp.route('/ticket_detail/<int:ticket_id>')
+def ticket_detail(ticket_id):
+    # Consulta el ticket y los productos asociados
+    ticket = Ticket.query.get_or_404(ticket_id)
+    products = Product.query.filter_by(ticket_id=ticket_id).all()
+
+    return render_template('ticket_detail.html', ticket=ticket, products=products)
+

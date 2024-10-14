@@ -20,10 +20,10 @@
                 </thead>
                 <tbody>
                     {% for ticket in tickets %}
-                        <tr>
+                        <tr onclick="window.location='{{ url_for('main.ticket_detail', ticket_id=ticket.id) }}'" style="cursor: pointer;">
                             <td>{{ ticket.description.name }}</td>
                             <td>{{ ticket.date.strftime('%Y-%m-%d') }}</td>
-                            <td>{{ ticket.total_amount }} €</td>
+                            <td>€{{ ticket.total_amount }}</td>
                         </tr>
                     {% endfor %}
                 </tbody>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalle del Ticket</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="welcome-container">
+        <h1>Detalle del Ticket</h1>
+
+        <h2>Descripción: {{ ticket.description.name }}</h2>
+        <p><strong>Fecha:</strong> {{ ticket.date.strftime('%Y-%m-%d') }}</p>
+        <p><strong>Cantidad Total:</strong> €{{ ticket.total_amount }}</p>
+
+        <h2>Productos</h2>
+        {% if products %}
+            <table class="ticket-table">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Cantidad</th>
+                        <th>Precio</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for product in products %}
+                        <tr>
+                            <td><strong>{{ product.name }}</strong></td>
+                            <td>{{ product.quantity }}</td>
+                            <td>{{ product.prices[0].price }} €</td>
+                            <td><strong>{{ (product.prices[0].price * product.quantity) | round(2) }} €</strong></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No hay productos asociados a este ticket.</p>
+        {% endif %}
+        
+        <a href="{{ url_for('main.view_tickets') }}" class="add-expense-link">Volver a Tickets</a>
+    </div>
+</body>
+</html>
