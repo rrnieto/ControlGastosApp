@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Añadir Gasto</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <!-- Sección del Formulario -->
+        <div class="form-section">
+            <h1>Añadir un nuevo gasto</h1>
+            <form id="expense-form" action="/add_expense" method="POST">
+                <label for="description">Descripción:</label>
+                <select id="description" name="description_existing">
+                    <option value="">Selecciona una descripción existente...</option>
+                    {% for desc in descriptions %}
+                        <option value="{{ desc.id }}">{{ desc.name }}</option>
+                    {% endfor %}
+                </select>
+                <input type="text" id="description_new" name="description_new" placeholder="O añade una nueva descripción">
+
+                <label for="amount">Cantidad Total:</label>
+                <input type="number" id="amount" name="amount" step="0.01" required>
+
+                <label for="date">Fecha:</label>
+                <input type="date" id="date" name="date" required>
+
+                <label for="local">Local:</label>
+                <input type="text" id="local" name="local" required>
+
+                <label for="payment_type">Tipo de Pago:</label>
+                <select id="payment_type" name="payment_type" required>
+                    {% for payment in payment_types %}
+                        <option value="{{ payment.id }}">{{ payment.name }}</option>
+                    {% endfor %}
+                </select>
+
+                <!-- Entrada de Producto -->
+                <div id="product_input">
+                    <h3>Nuevo Producto</h3>
+                    <label>Producto:</label>
+                    <input type="text" id="product_name">
+                    <label>Precio:</label>
+                    <input type="number" id="product_price" step="0.01">
+                    <label>Cantidad:</label>
+                    <input type="number" id="product_quantity" step="0.01">
+                </div>
+                <button type="button" onclick="addProduct()">Añadir Producto</button><br><br>
+                
+                <!-- Campo oculto para enviar los productos -->
+                <input type="hidden" id="products" name="products">
+
+                <button type="submit" onclick="prepareForm()">Guardar ticket</button>
+            </form>
+        </div>
+
+        <!-- Sección de Vista Previa del Ticket -->
+        <div class="ticket-preview">
+            <h2>Vista Previa del Ticket</h2>
+            <div id="product_list" class="product-list">
+                <!-- Los productos añadidos se mostrarán aquí -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const productList = document.getElementById("product_list");
+        let products = [];
+
+        // Función para añadir un producto al listado y actualizar la vista previa
+        function addProduct() {
+            const name = document.getElementById("product_name").value;
+            const price = parseFloat(document.getElementById("product_price").value);
+            const quantity = parseFloat(document.getElementById("product_quantity").value);
+
+            if (!name || isNaN(price) || isNaN(quantity)) {
+                alert("Por favor, complete todos los campos del producto.");
+                return;
+            }
+
+            // Añadir el producto al array de productos
+            const product = { name, price, quantity };
+            products.push(product);
+
+            // Actualizar la vista previa del ticket
+            renderProductList();
+
+            // Limpiar los campos de entrada
+            document.getElementById("product_name").value = '';
+            document.getElementById("product_price").value = '';
+            document.getElementById("product_quantity").value = '';
+        }
+
+        // Función para renderizar el listado de productos en la vista previa
+        function renderProductList() {
+            productList.innerHTML = '';
+
+            products.forEach((product, index) => {
+                const productItem = document.createElement("div");
+                productItem.classList.add("product-item");
+                productItem.innerHTML = `
+                    <span>${product.name} - Precio: €${product.price.toFixed(2)} - Cantidad: ${product.quantity}</span>
+                    <button onclick="removeProduct(${index})">Eliminar</button>
+                `;
+                productList.appendChild(productItem);
+            });
+        }
+
+        // Función para eliminar un producto de la lista
+        function removeProduct(index) {
+            products.splice(index, 1);
+            renderProductList();
+        }
+
+        // Función para preparar el formulario y enviar los productos junto con los datos del ticket
+        function prepareForm() {
+            document.getElementById("products").value = JSON.stringify(products);
+        }
+    </script>
+</body>
+</html>

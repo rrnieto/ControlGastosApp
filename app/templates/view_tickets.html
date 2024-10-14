@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Últimos Tickets</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="welcome-container">
+        <h1>Últimos Tickets</h1>
+        
+        {% if tickets %}
+            <table class="ticket-table">
+                <thead>
+                    <tr>
+                        <th>Descripción</th>
+                        <th>Fecha</th>
+                        <th>Cantidad Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for ticket in tickets %}
+                        <tr>
+                            <td>{{ ticket.description.name }}</td>
+                            <td>{{ ticket.date.strftime('%Y-%m-%d') }}</td>
+                            <td>{{ ticket.total_amount }} €</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No hay tickets disponibles.</p>
+        {% endif %}
+        
+        <a href="{{ url_for('main.index') }}" class="add-expense-link">Volver al Inicio</a>
+    </div>
+</body>
+</html>

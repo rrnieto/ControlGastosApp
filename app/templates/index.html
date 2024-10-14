@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Control de Gastos App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="welcome-container">
+        <h1>Control de Gastos</h1>
+        <a href="{{ url_for('main.add_expense') }}" class="add-expense-link">Añadir Gasto</a>
+		<a href="{{ url_for('main.view_tickets') }}" class="view-tickets-link">Ver Últimos Tickets</a>
+    </div>
+</body>
+</html>
+
+
+

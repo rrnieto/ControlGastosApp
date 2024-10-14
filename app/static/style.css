@@ -1,0 +1,202 @@
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Estilo general de la página */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    line-height: 1.6;
+    padding: 20px;
+}
+
+h1, h2 {
+    text-align: center;
+    color: #007acc;
+    margin-bottom: 20px;
+}
+
+a {
+    color: #007acc;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Contenedor de bienvenida */
+.welcome-container {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo para el enlace de "Añadir Gasto" */
+.add-expense-link {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007acc;
+    color: #fff;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 16px;
+    margin-top: 20px;
+}
+
+.add-expense-link:hover {
+    background-color: #005ea0;
+}
+
+/* Contenedor principal */
+.container {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Secciones izquierda (formulario) y derecha (ticket) */
+.form-section, .ticket-preview {
+    flex: 1;
+    padding: 20px;
+}
+
+/* Estilo del formulario */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+input[type="text"], input[type="number"], input[type="date"], select {
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    width: 100%;
+}
+
+button {
+    padding: 10px;
+    font-size: 16px;
+    background-color: #007acc;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #005ea0;
+}
+
+/* Estilo para la vista previa del ticket */
+.ticket-preview {
+    background-color: #f9f9f9;
+    border-left: 2px solid #ddd;
+}
+
+.ticket-preview h2 {
+    color: #007acc;
+    text-align: center;
+}
+
+.product-list {
+    margin-top: 20px;
+}
+
+.product-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #e6e6e6;
+    border-radius: 5px;
+}
+
+.product-item span {
+    flex: 1;
+}
+
+.product-item button {
+    background-color: #ff5f5f;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.product-item button:hover {
+    background-color: #e04646;
+}
+
+/* Estilo de enlaces */
+.link {
+    display: inline-block;
+    margin-top: 15px;
+}
+
+/* Estilo para el enlace de "Ver Últimos Tickets" */
+.view-tickets-link {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: #fff;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 16px;
+    margin-top: 20px;
+    margin-left: 10px;
+}
+
+.view-tickets-link:hover {
+    background-color: #218838;
+}
+
+/* Estilo de la tabla de tickets */
+.ticket-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.ticket-table th, .ticket-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+.ticket-table th {
+    background-color: #007acc;
+    color: white;
+}
+
+.ticket-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.ticket-table tr:hover {
+    background-color: #f1f1f1;
+}
