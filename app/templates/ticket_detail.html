@@ -14,7 +14,7 @@
         <p><strong>Cantidad Total:</strong> €{{ ticket.total_amount }}</p>
 
         <h2>Productos</h2>
-        {% if products %}
+        {% if product_tickets %}
             <table class="ticket-table">
                 <thead>
                     <tr>
@@ -25,15 +25,19 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for product in products %}
+                    {% for item in product_tickets %}
                         <tr>
-                            <td><a href="{{ url_for('main.product_history', product_id=product.id) }}"><strong>{{ product.name }}</strong></a></td>
-                            <td>{{ product.quantity }}</td>
-                            <td>{{ product.prices[0].price }} €</td>
-                            <td><strong>{{ (product.prices[0].price * product.quantity) | round(2) }} €</strong></td>
+                            {% if item.product %}
+                                <td><a href="{{ url_for('main.product_history', product_id=item.product.id) }}"><strong>{{ item.product.name }}</strong></a></td>
+                                <td>{{ item.quantity }}</td>
+                                <td>€{{ item.price }}</td>
+                                <td><strong>€{{ (item.price * item.quantity) | round(2) }}</strong></td>
+                            {% else %}
+                                <td colspan="4">Producto no encontrado</td>
+                            {% endif %}
                         </tr>
                     {% endfor %}
-                </tbody>
+                </tbody>                
             </table>
         {% else %}
             <p>No hay productos asociados a este ticket.</p>

@@ -209,3 +209,12 @@ button:hover {
     color: #333; /* Puedes ajustar el color si quieres un tono específico */
 }
 
+.lowest-price {
+    color: green;
+    font-weight: bold;
+}
+
+.highest-price {
+    color: red;
+    font-weight: bold;
+}

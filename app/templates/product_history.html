@@ -9,12 +9,22 @@
     <div class="welcome-container">
         <h1>Historial de Precios de {{ product.name }}</h1>
 
+        <div class="price-info">
+            {% if lowest_price_record %}
+                <p><strong>Precio más bajo:</strong> <span class="lowest-price">€{{ lowest_price_record.price }}</span> ({{ lowest_price_record.date.strftime('%Y-%m-%d') }})</p>
+            {% endif %}
+            {% if highest_price_record %}
+                <p><strong>Precio más alto:</strong> <span class="highest-price">€{{ highest_price_record.price }}</span> ({{ highest_price_record.date.strftime('%Y-%m-%d') }})</p>
+            {% endif %}
+        </div>
+
         {% if price_history %}
             <table class="ticket-table">
                 <thead>
                     <tr>
                         <th>Fecha</th>
                         <th>Precio</th>
+                        <th>Ticket ID</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -22,6 +32,7 @@
                         <tr>
                             <td>{{ record.date.strftime('%Y-%m-%d') }}</td>
                             <td>€{{ record.price | round(2) }}</td>
+                            <td>{{ record.ticket_id }}</td>
                         </tr>
                     {% endfor %}
                 </tbody>
@@ -30,7 +41,9 @@
             <p>No hay historial de precios disponible para este producto.</p>
         {% endif %}
         
-        <a href="{{ url_for('main.ticket_detail', ticket_id=product.ticket_id) }}" class="add-expense-link">Volver al Detalle del Ticket</a>
+        {% if last_ticket_id %}
+            <a href="{{ url_for('main.ticket_detail', ticket_id=last_ticket_id) }}" class="add-expense-link">Volver al Detalle del Ticket</a>
+        {% endif %}
     </div>
 </body>
 </html>
