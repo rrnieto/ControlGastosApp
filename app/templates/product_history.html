@@ -4,10 +4,24 @@
     <meta charset="UTF-8">
     <title>Historial de Precios</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script>
+        // Función para mostrar y ocultar el gráfico
+        function toggleGraph() {
+            var graphDiv = document.getElementById("price-graph");
+            var button = document.getElementById("toggle-graph-btn");
+            if (graphDiv.style.display === "none") {
+                graphDiv.style.display = "block";
+                button.textContent = "Ocultar Gráfico";
+            } else {
+                graphDiv.style.display = "none";
+                button.textContent = "Mostrar Gráfico";
+            }
+        }
+    </script>
 </head>
 <body>
     <div class="welcome-container">
-        <h1>Historial de Precios de {{ product.name }}</h1>
+        <h1>{{ product.name }}</h1>
 
         <div class="price-info">
             {% if lowest_price_record %}
@@ -41,9 +55,25 @@
             <p>No hay historial de precios disponible para este producto.</p>
         {% endif %}
         
-        {% if last_ticket_id %}
-            <a href="{{ url_for('main.ticket_detail', ticket_id=last_ticket_id) }}" class="add-expense-link">Volver al Detalle del Ticket</a>
-        {% endif %}
+        <!-- Botones para volver al índice y al último ticket -->
+        <div class="button-container">
+            <!-- Botón para mostrar/ocultar el gráfico -->
+            <button id="toggle-graph-btn" onclick="toggleGraph()" class="view-tickets-link">Mostrar Gráfico</button>
+            <a href="{{ url_for('main.index') }}" class="btn">Volver al Índice</a>
+            {% if last_ticket_id %}
+                <a href="{{ url_for('main.ticket_detail', ticket_id=last_ticket_id) }}" class="btn">Volver al Último Ticket</a>
+            {% endif %}                    
+        </div>
+
+        
+        <!-- Div que contiene el gráfico, inicialmente escondido -->
+        <div id="price-graph" style="display: none;">
+            {% if plot_url %}            
+                <img src="data:image/png;base64,{{ plot_url }}" alt="Gráfico de historial de precios">
+            {% endif %}
+        </div>
+
+        
     </div>
 </body>
 </html>

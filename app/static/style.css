@@ -95,6 +95,11 @@ input[type="text"], input[type="number"], input[type="date"], select {
     width: 100%;
 }
 
+.button-container {
+    margin-top: 20px;
+    text-align: center;
+}
+
 button {
     padding: 10px;
     font-size: 16px;
@@ -104,6 +109,21 @@ button {
     border-radius: 5px;
     cursor: pointer;
     margin-top: 10px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007acc;
+    color: #fff;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 16px;
+    margin: 10px;
+}
+
+.btn:hover {
+    background-color: #005ea0;
 }
 
 button:hover {
@@ -215,6 +235,6 @@ button:hover {
 }
 
 .highest-price {
-    color: red;
+    color: orange;
     font-weight: bold;
 }
